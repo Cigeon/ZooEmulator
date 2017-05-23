@@ -62,7 +62,7 @@ namespace ZooEmulator.Animals
             if (_health < MaxHealth)
             {
                 _health++;
-                Console.WriteLine($"Lion {Name} has been cured, his health: {Health}");
+                Console.WriteLine($"{AnimalType} {Name} has been cured, his health: {Health}");
             }
 
         }
