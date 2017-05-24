@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooEmulator.Animals;
+using ZooEmulator.Repo;
+using ZooEmulator.Menu;
 
 namespace ZooEmulator
 {
@@ -11,30 +13,25 @@ namespace ZooEmulator
     {
         static void Main(string[] args)
         {
-            Animal lion = new Fox("Reddy");
-            lion.ChangeStatus();
-            lion.ChangeStatus();
+            var zoo = new ZooRepo();
 
-            lion.ChangeStatus();
-            lion.ChangeStatus();
-            lion.ChangeStatus();
-            lion.ChangeStatus();
+            // Create menu
+            var menu = new MenuItem
+            { 
+                new MenuItem
+                {
+                    Name = "Create animal",
+                    Action = () => Console.WriteLine("create")
+                },
+                new MenuItem
+                {
+                    Name = "Delete animal",
+                    Action = () => Console.WriteLine("delete")
+                }
+            };
+            //run menu
+            menu.Run();
 
-            lion.ChangeStatus();
-
-            lion.Feed();
-            lion.Cure();
-
-            Animal tiger = new Tiger("dfjkdfjkdj");
-            tiger.ChangeStatus();
-
-            if (AnimalType.Lion.ToString() == "Lion")
-            {
-                Console.WriteLine("inside");
-            }
-            Console.WriteLine(AnimalType.Lion);
-
-            Console.ReadKey();
         }
     }
 }
