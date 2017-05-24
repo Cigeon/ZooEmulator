@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZooEmulator.Animals
 {
-    enum Status
+    enum AnimalStatus
     {
         Dead = 0,
         Sick,

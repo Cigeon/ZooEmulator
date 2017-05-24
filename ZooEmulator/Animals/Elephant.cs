@@ -14,6 +14,6 @@ namespace ZooEmulator.Animals
             _health = _maxHealth;
         }
 
-        public override string AnimalType { get { return "Elephant"; } }
+        public override AnimalType Type { get { return AnimalType.Elephant; } }
     }
 }
