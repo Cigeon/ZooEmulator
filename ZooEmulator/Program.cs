@@ -28,6 +28,12 @@ namespace ZooEmulator
             Animal tiger = new Tiger("dfjkdfjkdj");
             tiger.ChangeStatus();
 
+            if (AnimalType.Lion.ToString() == "Lion")
+            {
+                Console.WriteLine("inside");
+            }
+            Console.WriteLine(AnimalType.Lion);
+
             Console.ReadKey();
         }
     }
