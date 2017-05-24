@@ -67,5 +67,10 @@ namespace ZooEmulator.Animals
 
         }
 
+        public override string ToString()
+        {
+            return $"{Type} - name: {Name}, status: {Status}, health: {Health}";
+        }
+
     }
 }

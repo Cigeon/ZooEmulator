@@ -11,8 +11,8 @@ namespace ZooEmulator.Repo
     interface IZoo
     {
         void CreateAnimal(string name, AnimalType type);
-        IEnumerable GetAnimalList();
+        IEnumerable<Animal> GetAnimalList();
         Animal GetAnimalByName(string name);
-        void Delete(string name);
+        void DeleteAnimal(string name);
     }
 }

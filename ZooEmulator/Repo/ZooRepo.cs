@@ -64,7 +64,7 @@ namespace ZooEmulator.Repo
             
         }
 
-        public IEnumerable GetAnimalList()
+        public IEnumerable<Animal> GetAnimalList()
         {
             return _animals;
         }
@@ -74,10 +74,10 @@ namespace ZooEmulator.Repo
             return _animals.First(i => i.Name == name);
         }
 
-        public void Delete(string name)
+        public void DeleteAnimal(string name)
         {
             var delAnimal = _animals.First(i => i.Name == name);
-            _animals.Remove(delAnimal);   
+            if (delAnimal.Status == AnimalStatus.Dead) _animals.Remove(delAnimal);
         }
     }
 }
