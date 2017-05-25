@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooEmulator.Animals;
 using ZooEmulator.Factories;
+using System.Timers;
 
 namespace ZooEmulator.Repo
 {
@@ -23,7 +24,11 @@ namespace ZooEmulator.Repo
         {
             // Check if animal with this name doesn't exist
             var exist = _animals.Where(i => i.Name == name).ToArray().Length;
-            if (exist > 0) { Console.WriteLine("Animal with this name already exitst!"); }
+            if (exist > 0)
+            {
+                Message.GetInstance().Body = "Animal with this name already exitst!";
+                return;
+            }
 
             // Create specific factory
             switch(type)
@@ -66,18 +71,51 @@ namespace ZooEmulator.Repo
 
         public IEnumerable<Animal> GetAnimalList()
         {
-            return _animals;
+            return _animals.OrderBy(i => i.Name);
         }
 
         public Animal GetAnimalByName(string name)
         {
-            return _animals.First(i => i.Name == name);
+             if (_animals.Count > 0)
+             {
+                    return _animals.First(i => i.Name == name);
+             }
+             else
+             {
+                throw new InvalidOperationException();
+             }           
+        }
+
+        public Animal GetRandomAnimal()
+        {
+            if (_animals.Count > 0)
+            {
+                var r = new Random();
+                return _animals[r.Next(0, _animals.Count)];
+            }
+            return null;
         }
 
         public void DeleteAnimal(string name)
         {
-            var delAnimal = _animals.First(i => i.Name == name);
-            if (delAnimal.Status == AnimalStatus.Dead) _animals.Remove(delAnimal);
+            try
+            {
+                if (_animals.Count > 0)
+                {
+                    var delAnimal = _animals.First(i => i.Name == name);
+                    if (delAnimal.Status == AnimalStatus.Dead) _animals.Remove(delAnimal);
+                    Message.GetInstance().Body = $"Animal {name} deleted";
+                }
+                else
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                Message.GetInstance().Body = $"Animal {name} doesn't exist";
+            }
+            
         }
     }
 }

@@ -13,6 +13,7 @@ namespace ZooEmulator.Repo
         void CreateAnimal(string name, AnimalType type);
         IEnumerable<Animal> GetAnimalList();
         Animal GetAnimalByName(string name);
+        Animal GetRandomAnimal();
         void DeleteAnimal(string name);
     }
 }

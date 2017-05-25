@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooEmulator.Animals;
 using ZooEmulator.Repo;
+using System.Timers;
+using System.Diagnostics;
+//using System.Threading;
 
 namespace ZooEmulator
 {
@@ -12,96 +15,134 @@ namespace ZooEmulator
     {
         static void Main(string[] args)
         {
+            bool allAnimalsDead = false;    // Flag to display message
+
+            // Create zoo repository
             var zoo = new ZooRepo();
+
+            //Create God of death
+            var Anubis = new Timer(5000);
+            Anubis.Elapsed += (sender, e) => TouchSomebody(sender, e, zoo);
+            Anubis.Enabled = true;
 
             int userInput = 0;
             do
             {
+                // Check if any animal alive
+                var animals = zoo.GetAnimalList();
+                if (animals.ToArray().Length > 0)
+                {
+                    var deadAnimals = animals.Where(i => i.Status.Equals(AnimalStatus.Dead));
+                    if (animals.ToArray().Length == deadAnimals.ToArray().Length)
+                    {
+                        allAnimalsDead = true;
+                        break;
+                    }                        
+                }
+
+
                 // Clear scene and print title
                 PrintTitle();
 
-                // Get all animals
-                var animals = zoo.GetAnimalList();
-
-                // Print all animals
-                Console.WriteLine($"In zoo present {animals.ToArray().Length} animals");
+                // Print message
+                Console.WriteLine(Message.GetInstance().Body);
                 Console.WriteLine();
-                foreach (var item in animals)
-                {
-                    Console.WriteLine(item);
-                }
 
-                // Get user input command
+                // Display menu and get user input 
                 userInput = DisplayMainMenu();
 
+                // Exit command
+                if (userInput == 5) break;
 
-                switch(userInput)
+                try
                 {
-                    case 1:
-                        // Clear scene and print title
-                        PrintTitle();
+                    switch (userInput)
+                    {
+                        case 1:
+                            // Clear scene and print title
+                            PrintTitle();
 
-                        userInput = DisplaySecondMenu();
+                            // Display menu and get user input 
+                            userInput = DisplaySecondMenu();
 
-                        switch(userInput)
-                        {
-                            case 1:
-                                Console.WriteLine($"Type lion name to create:");
-                                zoo.CreateAnimal(Console.ReadLine(), AnimalType.Lion);
-                                break;
-                            case 2:
-                                Console.WriteLine($"Type tiger name to create:");
-                                zoo.CreateAnimal(Console.ReadLine(), AnimalType.Tiger);
-                                break;
-                            case 3:
-                                Console.WriteLine($"Type elephant name to create:");
-                                zoo.CreateAnimal(Console.ReadLine(), AnimalType.Elephant);
-                                break;
-                            case 4:
-                                Console.WriteLine($"Type bear name to create:");
-                                zoo.CreateAnimal(Console.ReadLine(), AnimalType.Bear);
-                                break;
-                            case 5:
-                                Console.WriteLine($"Type wolf name to create:");
-                                zoo.CreateAnimal(Console.ReadLine(), AnimalType.Wolf);
-                                break;
-                            case 6:
-                                Console.WriteLine($"Type fox name to create:");
-                                zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
-                                break;
-                            default:
-                                break;
-                        }                        
+                            switch (userInput)
+                            {
+                                case 1:
+                                    Console.WriteLine($"Type lion name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Lion);
+                                    break;
+                                case 2:
+                                    Console.WriteLine($"Type tiger name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Tiger);
+                                    break;
+                                case 3:
+                                    Console.WriteLine($"Type elephant name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Elephant);
+                                    break;
+                                case 4:
+                                    Console.WriteLine($"Type bear name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Bear);
+                                    break;
+                                case 5:
+                                    Console.WriteLine($"Type wolf name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Wolf);
+                                    break;
+                                case 6:
+                                    Console.WriteLine($"Type fox name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    break;
+                                default:
+                                    break;
+                            }
 
-                        userInput = 0;
-                        break;
+                            userInput = 0;
+                            break;
 
-                    case 2:
-                        Console.WriteLine($"Type animal name to feed:");
-                        var feedAnimal = zoo.GetAnimalByName(Console.ReadLine());
-                        feedAnimal.Feed();
-                        break;
-                    case 3:
-                        Console.WriteLine($"Type animal name to cure:");
-                        var cureAnimal = zoo.GetAnimalByName(Console.ReadLine());
-                        cureAnimal.Cure();
-                        break;
-                    case 4:
-                        Console.WriteLine($"Type animal name to delete:");
-                        zoo.DeleteAnimal(Console.ReadLine());
-                        break;
-                    default:
-                        break;
+                        case 2:
+                            Console.WriteLine($"Type animal name to feed:");
+                            var feedAnimal = zoo.GetAnimalByName(Console.ReadLine());
+                            feedAnimal.Feed();
+                            break;
+                        case 3:
+                            Console.WriteLine($"Type animal name to cure:");
+                            var cureAnimal = zoo.GetAnimalByName(Console.ReadLine());
+                            cureAnimal.Cure();
+                            break;
+                        case 4:
+                            Console.WriteLine($"Type animal name to delete:");
+                            zoo.DeleteAnimal(Console.ReadLine());
+                            break;
+                        case 5:
+                            Console.WriteLine($"Type animal name to delete:");
+                            zoo.DeleteAnimal(Console.ReadLine());
+                            break;
+                        default:
+                            break;
+
+                    }
 
                 }
+                catch (InvalidOperationException)
+                {
+                    Message.GetInstance().Body = $"Animal you specify doesn't exist";
+                }
+
+
             }
-            while (userInput != 5);
+            while (true);
+
+            // Show message if all animals are dead
+            if (allAnimalsDead)
+            {
+                Console.Clear();
+                Console.WriteLine("There are any alive animal in the zoo!");
+                Console.ReadKey();
+            }           
 
         }
 
         static int DisplayMainMenu()
         {
-            Console.WriteLine();
             Console.WriteLine("Actions:");
             Console.WriteLine();
             Console.WriteLine("1. Add animal");
@@ -109,8 +150,27 @@ namespace ZooEmulator
             Console.WriteLine("3. Cure animal");
             Console.WriteLine("4. Delete animal");
             Console.WriteLine("5. Exit");
-            var result = Console.ReadLine();
-            return Convert.ToInt32(result);
+            Console.WriteLine();
+
+            try
+            {
+                var result = Console.ReadLine();
+                var value = Convert.ToInt32(result);
+                if (value < 1 || value > 5)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return value;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Message.GetInstance().Body = "Value not in range [1-5]";
+            }
+            catch (Exception)
+            {
+                Message.GetInstance().Body = "Wrong input";
+            }
+            return 0;
         }
 
         static int DisplaySecondMenu()
@@ -124,9 +184,36 @@ namespace ZooEmulator
             Console.WriteLine("5. Wolf");
             Console.WriteLine("6. Fox");
             Console.WriteLine("7. Back to prev menu");
+            Console.WriteLine();
 
-            var result = Console.ReadLine();
-            return Convert.ToInt32(result);
+            try
+            {
+                var result = Console.ReadLine();
+                var value = Convert.ToInt32(result);
+                if (value < 1 || value > 7)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return value;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Message.GetInstance().Body = "Value not in range [1-7]";
+            }
+            catch (Exception )
+            {
+                Message.GetInstance().Body = "Wrong input";
+            }
+            return 0;
+        }
+
+        private static void TouchSomebody(object source, ElapsedEventArgs e, ZooRepo zoo)
+        {
+            var victim = zoo.GetRandomAnimal();
+            if (victim != null)
+            {
+                victim.ChangeStatus();
+            }            
         }
 
         static void PrintTitle()

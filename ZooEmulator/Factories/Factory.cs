@@ -7,11 +7,6 @@ using ZooEmulator.Animals;
 
 namespace ZooEmulator.Factories
 {
-    //abstract class Factory
-    //{
-    //    public abstract Animal Create(string name);
-    //}
-
     class LionFactory : IFactory
     {
         public Animal Create(string name) { return new Lion(name); }
