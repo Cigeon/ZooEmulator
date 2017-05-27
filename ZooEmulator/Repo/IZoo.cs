@@ -23,7 +23,7 @@ namespace ZooEmulator.Repo
         Animal GetElephantByName(string name);
         IEnumerable<string> GetEmptyAnimalsNames();
         IEnumerable<Animal> GetMoreHealthyAnimalsEachType();
-        IEnumerable<int> GetDeadAnimalsAmountEachType();
+        IEnumerable<KeyValuePair<AnimalType, Int32>> GetDeadAnimalsAmountEachType();
         IEnumerable<Animal> GetWolfsAndBearsHealthGt3();
         IEnumerable<Animal> GetAnimalsMinMaxHealth();
         double GetAnimalsAvgHealth();

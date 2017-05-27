@@ -141,7 +141,8 @@ namespace ZooEmulator.Repo
             
         }
 
-        // 3rd task
+        // ------------------ 3rd task ---------------------
+
         public IEnumerable<IGrouping<AnimalType, Animal>> GetAnimalsGroupedByType()
         {
             return _animals.GroupBy(animal => animal.Type);
@@ -169,22 +170,21 @@ namespace ZooEmulator.Repo
             return _animals.Where(animal => animal.Status.Equals(AnimalStatus.Empty))
                         .Select(animal => animal.Name);
         }
-
+        // ???
         public IEnumerable<Animal> GetMoreHealthyAnimalsEachType()
         {
-
-
-
-
-            return _animals;
+            return _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
+                            .GroupBy(animal => animal.Type)
+                            .Select(group => group.OrderBy(i => i.Health).First());
         }
 
-        public IEnumerable<int> GetDeadAnimalsAmountEachType()
+        public IEnumerable<KeyValuePair<AnimalType, Int32>> GetDeadAnimalsAmountEachType()
         {
-
-
-
-            return new List<int>();
+            return _animals.GroupBy(animal => animal.Type)
+                            .Select(animal => new KeyValuePair<AnimalType, Int32>(
+                                animal.Key, 
+                                animal.Where(a => a.Status.Equals(AnimalStatus.Dead))
+                                    .Count()));
         }
 
         public IEnumerable<Animal> GetWolfsAndBearsHealthGt3()
@@ -194,18 +194,19 @@ namespace ZooEmulator.Repo
                          animal.Type.Equals(AnimalType.Bear)));
 
         }
-
+        // ???
         public IEnumerable<Animal> GetAnimalsMinMaxHealth()
         {
-            //var result = (from animal in _animals
-            //              orderby animal.Health).ToList();
+            //return _animals.GroupBy(animal => animal.Health)
+            //            .Select(group => group.Max()).ToList()
+            //            .Union(_animals.GroupBy(animal => animal.Health)
+            //            .Select(group => group.Min()).ToList());
 
-            return _animals;
-            
-            //var res = (_animals.OrderBy(animal => animal.Health).First()).t
+            //return _animals.OrderBy(a => a.Health).Where(a => a.First())
+            //                     .Union(_animals.Where(a => a.Health.Equals(_animals.Min(h => h.Health))));
 
-            //return _animals.OrderBy(animal => animal.Health).First())
-            //            .Union(_animals.OrderByDescending(animal => animal.Health)).F;
+            return _animals.Where(a => a.Health.Equals(_animals.Max(h => h.Health)))
+                                 .Union(_animals.Where(a => a.Health.Equals(_animals.Min(h => h.Health))));
         }
 
         public double GetAnimalsAvgHealth()

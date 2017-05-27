@@ -195,12 +195,20 @@ namespace ZooEmulator
                                     Console.ReadKey();
                                     break;
                                 case 6:
-                                    Console.WriteLine($"Type fox name to create:");
-                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    // Clear scene and print title
+                                    PrintTitle();
+                                    Console.WriteLine($"More healthy animals of each type:");
+                                    zoo.GetMoreHealthyAnimalsEachType().ToList().ForEach(i => Console.WriteLine(i));
+
+                                    Console.ReadKey();
                                     break;
                                 case 7:
-                                    Console.WriteLine($"Type fox name to create:");
-                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    // Clear scene and print title
+                                    PrintTitle();
+                                    Console.WriteLine($"Dead animals:");
+                                    zoo.GetDeadAnimalsAmountEachType().ToList().ForEach(i => Console.WriteLine($"{i.Key}: {i.Value}"));
+
+                                    Console.ReadKey();
                                     break;
                                 case 8:
                                     // Clear scene and print title
@@ -211,8 +219,12 @@ namespace ZooEmulator
                                     Console.ReadKey();
                                     break;
                                 case 9:
-                                    Console.WriteLine($"Type fox name to create:");
-                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    zoo.GetAnimalsMinMaxHealth().ToList().ForEach(i => Console.WriteLine(i));
+
+                                    Console.ReadKey();
                                     break;
                                 case 10:
                                     // Clear scene and print title
