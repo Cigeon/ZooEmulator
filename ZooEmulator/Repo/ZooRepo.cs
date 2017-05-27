@@ -117,5 +117,73 @@ namespace ZooEmulator.Repo
             }
             
         }
+
+        // 3rd task
+        public IEnumerable<IGrouping<AnimalType, Animal>> GetAnimalsGroupedByType()
+        {
+            return _animals.GroupBy(animal => animal.Type);
+        }
+
+        public IEnumerable<Animal> GetAnimalsByStatus(AnimalStatus status)
+        {
+            return _animals.Where(animal => animal.Status.Equals(status));
+        }
+
+        public IEnumerable<Animal> GetSickTigers()
+        {
+            return _animals.Where(animal => animal.Type.Equals(AnimalType.Tiger) &&
+                        animal.Status.Equals(AnimalStatus.Sick));
+        }
+
+        public Animal GetElephantByName(string name)
+        {
+            return _animals.First(animal => animal.Type.Equals(AnimalType.Elephant) && 
+                        animal.Name.Equals(name));
+        }
+
+        public IEnumerable<string> GetEmptyAnimalsNames()
+        {
+            return _animals.Where(animal => animal.Status.Equals(AnimalStatus.Empty))
+                        .Select(animal => animal.Name);
+        }
+
+        public IEnumerable<Animal> GetMoreHealthyAnimalsEachType()
+        {
+
+
+
+
+            return _animals;
+        }
+
+        public IEnumerable<int> GetDeadAnimalsAmountEachType()
+        {
+
+
+
+            return new List<int>();
+        }
+
+        public IEnumerable<Animal> GetWolfsAndBearsHealthGt3()
+        {
+            return _animals.Where(animal => animal.Health > 3 &&
+                        (animal.Type.Equals(AnimalType.Wolf) ||
+                         animal.Type.Equals(AnimalType.Bear)));
+
+        }
+
+        public IEnumerable<Animal> GetAnimalsMinMaxHealth()
+        {
+
+
+
+
+            return _animals;
+        }
+
+        public double GetAnimalsAvgHealth()
+        {
+            return _animals.Average(animal => animal.Health);
+        }
     }
 }
