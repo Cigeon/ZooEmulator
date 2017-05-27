@@ -136,24 +136,91 @@ namespace ZooEmulator
                                     Console.ReadKey();
                                     break;
                                 case 2:
-                                    Console.WriteLine($"Type tiger name to create:");
-                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Tiger);
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    // Display menu and get user input 
+                                    userInput = DisplayStatusMenu();
+
+                                    var status = new AnimalStatus();
+
+                                    switch (userInput)
+                                    {
+                                        case 1:
+                                            status = AnimalStatus.Full;
+                                            break;
+                                        case 2:
+                                            status = AnimalStatus.Empty;
+                                            break;
+                                        case 3:
+                                            status = AnimalStatus.Sick;
+                                            break;
+                                        case 4:
+                                            status = AnimalStatus.Dead;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    zoo.GetAnimalsByStatus(status).ToList()
+                                        .ForEach(i => Console.WriteLine(i));
+
+                                    Console.ReadKey();
                                     break;
                                 case 3:
-                                    Console.WriteLine($"Type elephant name to create:");
-                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Elephant);
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    zoo.GetSickTigers().ToList().ForEach(i => Console.WriteLine(i));
+
+                                    Console.ReadKey();
                                     break;
                                 case 4:
-                                    Console.WriteLine($"Type bear name to create:");
-                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Bear);
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    Console.WriteLine(zoo.GetElephantByName(Console.ReadLine()));
+
+                                    Console.ReadKey();
                                     break;
                                 case 5:
-                                    Console.WriteLine($"Type wolf name to create:");
-                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Wolf);
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    zoo.GetEmptyAnimalsNames().ToList().ForEach(i => Console.WriteLine(i));
+
+                                    Console.ReadKey();
                                     break;
                                 case 6:
                                     Console.WriteLine($"Type fox name to create:");
                                     zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    break;
+                                case 7:
+                                    Console.WriteLine($"Type fox name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    break;
+                                case 8:
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    zoo.GetWolfsAndBearsHealthGt3().ToList().ForEach(i => Console.WriteLine(i));
+
+                                    Console.ReadKey();
+                                    break;
+                                case 9:
+                                    Console.WriteLine($"Type fox name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    break;
+                                case 10:
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    Console.WriteLine(zoo.GetAnimalsAvgHealth());
+
+                                    Console.ReadKey();
                                     break;
                                 default:
                                     break;
@@ -258,16 +325,16 @@ namespace ZooEmulator
         {
             Console.WriteLine("Show:");
             Console.WriteLine();
-            Console.WriteLine("1. animals grouped by type");
-            Console.WriteLine("2. animals by status");
-            Console.WriteLine("3. all sick tigers");
-            Console.WriteLine("4. elephant by name");
-            Console.WriteLine("5. names of empty animals");
-            Console.WriteLine("6. more healthy animals of the each type");
-            Console.WriteLine("7. dead animals amount of the each type");
-            Console.WriteLine("8. wolfs and bears health that have health > 3");
-            Console.WriteLine("9. animals that have min and max health");
-            Console.WriteLine("10. averrage health of all animal");
+            Console.WriteLine("1. Animals grouped by type");
+            Console.WriteLine("2. Animals by status");
+            Console.WriteLine("3. All sick tigers");
+            Console.WriteLine("4. Elephant by name");
+            Console.WriteLine("5. Names of empty animals");
+            Console.WriteLine("6. More healthy animals of the each type");
+            Console.WriteLine("7. Dead animals amount of the each type");
+            Console.WriteLine("8. Wolfs and bears health that have health > 3");
+            Console.WriteLine("9. Animals that have min and max health");
+            Console.WriteLine("10. Average health of all animal");
             Console.WriteLine("11. Back to prev menu");
             Console.WriteLine();
 
@@ -284,6 +351,38 @@ namespace ZooEmulator
             catch (IndexOutOfRangeException)
             {
                 Message.GetInstance().Body = "Value not in range [1-11]";
+            }
+            catch (Exception)
+            {
+                Message.GetInstance().Body = "Wrong input";
+            }
+            return 0;
+        }
+
+        static int DisplayStatusMenu()
+        {
+            Console.WriteLine("Choose a status:");
+            Console.WriteLine();
+            Console.WriteLine("1. Full");
+            Console.WriteLine("2. Empty");
+            Console.WriteLine("3. Sick");
+            Console.WriteLine("4. Dead");
+            Console.WriteLine("5. Back to prev menu");
+            Console.WriteLine();
+
+            try
+            {
+                var result = Console.ReadLine();
+                var value = Convert.ToInt32(result);
+                if (value < 1 || value > 5)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return value;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Message.GetInstance().Body = "Value not in range [1-5]";
             }
             catch (Exception)
             {

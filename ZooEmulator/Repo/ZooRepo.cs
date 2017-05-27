@@ -208,8 +208,6 @@ namespace ZooEmulator.Repo
             //            .Union(_animals.OrderByDescending(animal => animal.Health)).F;
         }
 
-
-
         public double GetAnimalsAvgHealth()
         {
             return _animals.Average(animal => animal.Health);
