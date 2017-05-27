@@ -37,7 +37,7 @@ namespace ZooEmulator
                     {
                         allAnimalsDead = true;
                         break;
-                    }                        
+                    }
                 }
 
 
@@ -52,7 +52,7 @@ namespace ZooEmulator
                 userInput = DisplayMainMenu();
 
                 // Exit command
-                if (userInput == 5) break;
+                if (userInput == 6) break;
 
                 try
                 {
@@ -113,9 +113,55 @@ namespace ZooEmulator
                             zoo.DeleteAnimal(Console.ReadLine());
                             break;
                         case 5:
-                            Console.WriteLine($"Type animal name to delete:");
-                            zoo.DeleteAnimal(Console.ReadLine());
+
+                            // Clear scene and print title
+                            PrintTitle();
+
+                            // Display menu and get user input 
+                            userInput = Display3rdMenu();
+
+                            switch (userInput)
+                            {
+                                case 1:
+                                    // Clear scene and print title
+                                    PrintTitle();
+
+                                    zoo.GetAnimalsGroupedByType().ToList()
+                                        .ForEach(g => 
+                                        {
+                                            Console.WriteLine($"Group {g.Key}");
+                                            g.ToList().ForEach(i => Console.WriteLine(i)); 
+                                        });
+
+                                    Console.ReadKey();
+                                    break;
+                                case 2:
+                                    Console.WriteLine($"Type tiger name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Tiger);
+                                    break;
+                                case 3:
+                                    Console.WriteLine($"Type elephant name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Elephant);
+                                    break;
+                                case 4:
+                                    Console.WriteLine($"Type bear name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Bear);
+                                    break;
+                                case 5:
+                                    Console.WriteLine($"Type wolf name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Wolf);
+                                    break;
+                                case 6:
+                                    Console.WriteLine($"Type fox name to create:");
+                                    zoo.CreateAnimal(Console.ReadLine(), AnimalType.Fox);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            userInput = 0;
                             break;
+
                         default:
                             break;
 
@@ -137,7 +183,7 @@ namespace ZooEmulator
                 Console.Clear();
                 Console.WriteLine("There are any alive animal in the zoo!");
                 Console.ReadKey();
-            }           
+            }
 
         }
 
@@ -149,7 +195,8 @@ namespace ZooEmulator
             Console.WriteLine("2. Feed animal");
             Console.WriteLine("3. Cure animal");
             Console.WriteLine("4. Delete animal");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("5. Show animals");
+            Console.WriteLine("6. Exit");
             Console.WriteLine();
 
             try
@@ -200,7 +247,45 @@ namespace ZooEmulator
             {
                 Message.GetInstance().Body = "Value not in range [1-7]";
             }
-            catch (Exception )
+            catch (Exception)
+            {
+                Message.GetInstance().Body = "Wrong input";
+            }
+            return 0;
+        }
+
+        static int Display3rdMenu()
+        {
+            Console.WriteLine("Show:");
+            Console.WriteLine();
+            Console.WriteLine("1. animals grouped by type");
+            Console.WriteLine("2. animals by status");
+            Console.WriteLine("3. all sick tigers");
+            Console.WriteLine("4. elephant by name");
+            Console.WriteLine("5. names of empty animals");
+            Console.WriteLine("6. more healthy animals of the each type");
+            Console.WriteLine("7. dead animals amount of the each type");
+            Console.WriteLine("8. wolfs and bears health that have health > 3");
+            Console.WriteLine("9. animals that have min and max health");
+            Console.WriteLine("10. averrage health of all animal");
+            Console.WriteLine("11. Back to prev menu");
+            Console.WriteLine();
+
+            try
+            {
+                var result = Console.ReadLine();
+                var value = Convert.ToInt32(result);
+                if (value < 1 || value > 11)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return value;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Message.GetInstance().Body = "Value not in range [1-11]";
+            }
+            catch (Exception)
             {
                 Message.GetInstance().Body = "Wrong input";
             }
@@ -213,7 +298,7 @@ namespace ZooEmulator
             if (victim != null)
             {
                 victim.ChangeStatus();
-            }            
+            }
         }
 
         static void PrintTitle()

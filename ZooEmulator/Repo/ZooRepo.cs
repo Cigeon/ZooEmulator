@@ -18,6 +18,29 @@ namespace ZooEmulator.Repo
         public ZooRepo()
         {
             _animals = new List<Animal>();
+            AddAnimalsForDebug();
+        }
+
+        private void AddAnimalsForDebug()
+        {
+            _animals = new List<Animal>
+            {
+                new Lion("Lenny"),
+                new Lion("Lippy"),
+                new Tiger("Tigo"),
+                new Tiger("Tai"),
+                new Elephant("Ellice"),
+                new Elephant("Andre"),
+                new Elephant("Pippo"),
+                new Bear("Bonny"),
+                new Bear("Claid"),
+                new Wolf("Chico"),
+                new Wolf("Harry"),
+                new Wolf("Sonny"),
+                new Fox("Jecky"),
+                new Fox("Ronny")
+            };
+
         }
 
         public void CreateAnimal(string name, AnimalType type)
@@ -174,12 +197,18 @@ namespace ZooEmulator.Repo
 
         public IEnumerable<Animal> GetAnimalsMinMaxHealth()
         {
-
-
-
+            //var result = (from animal in _animals
+            //              orderby animal.Health).ToList();
 
             return _animals;
+            
+            //var res = (_animals.OrderBy(animal => animal.Health).First()).t
+
+            //return _animals.OrderBy(animal => animal.Health).First())
+            //            .Union(_animals.OrderByDescending(animal => animal.Health)).F;
         }
+
+
 
         public double GetAnimalsAvgHealth()
         {
