@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooEmulator.Animals;
 using ZooEmulator.Repo;
+using ZooEmulator.Menues;
 using System.Timers;
 using System.Diagnostics;
 //using System.Threading;
@@ -19,11 +20,13 @@ namespace ZooEmulator
 
             // Create zoo repository
             var zoo = new ZooRepo();
+            zoo.AddAnimalsForDebug();
 
             //Create God of death
-            var Anubis = new Timer(5000);
-            Anubis.Elapsed += (sender, e) => TouchSomebody(sender, e, zoo);
-            Anubis.Enabled = true;
+            var Anubis = new GodOfDeath();
+            Anubis.SetWatchPeriod(5000);
+            Anubis.WatchFor(zoo);
+            Anubis.WakeUp();
 
             int userInput = 0;
             do

@@ -55,6 +55,7 @@
     <Compile Include="Factories\Factory.cs" />
     <Compile Include="Factories\IFactory.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Menues\GodOfDeath.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\IZoo.cs" />

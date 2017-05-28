@@ -21,7 +21,7 @@ namespace ZooEmulator.Repo
             AddAnimalsForDebug();
         }
 
-        private void AddAnimalsForDebug()
+        public void AddAnimalsForDebug()
         {
             _animals = new List<Animal>
             {
@@ -169,7 +169,7 @@ namespace ZooEmulator.Repo
             return _animals.Where(animal => animal.Status.Equals(AnimalStatus.Empty))
                         .Select(animal => animal.Name);
         }
-        // ???
+        
         public IEnumerable<Animal> GetMoreHealthyAnimalsEachType()
         {
             return _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
@@ -193,7 +193,7 @@ namespace ZooEmulator.Repo
                          animal.Type.Equals(AnimalType.Bear)));
 
         }
-        // ???
+        
         public IEnumerable<Animal> GetAnimalsMinMaxHealth()
         {
             return _animals.Select(i => new List<Animal>
