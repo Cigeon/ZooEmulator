@@ -37,7 +37,7 @@ namespace ZooEmulator.Animals
                 _status--;
 
                 // Print message 
-                Renderer.PrintMessage($"{Type} {Name} status decreased to {Status}");
+                Renderer.PrintMessage($"{Type} {Name} status is decreased to {Status}");
             }
             else
             {
@@ -46,7 +46,7 @@ namespace ZooEmulator.Animals
                     _health--;
 
                     // Print message
-                    Renderer.PrintMessage($"{Type} {Name} health decreased to {Health}");
+                    Renderer.PrintMessage($"{Type} {Name} health is decreased to {Health}");
 
                     if (_health == 0)
                     {
@@ -68,12 +68,12 @@ namespace ZooEmulator.Animals
                 _status = AnimalStatus.Full;
 
                 // Print message
-                Renderer.PrintMessage($"{Type} {Name} has been feed, his status: {Status}");
+                Renderer.PrintMessage($"{Type} {Name} is feeded, his status: {Status}");
             }
             else
             {
                 // Print message
-                Renderer.PrintMessage($"{Type} {Name} dead you can't feed it");
+                Renderer.PrintMessage($"{Type} {Name} dead, you can't feed it");
 
             }
 
@@ -89,7 +89,7 @@ namespace ZooEmulator.Animals
                     _health++;
 
                     // Print message
-                    Renderer.PrintMessage($"{Type} {Name} has been cured, his health: {Health}");
+                    Renderer.PrintMessage($"{Type} {Name} is cured, his health: {Health}");
 
                 }
                 else

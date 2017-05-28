@@ -19,9 +19,9 @@ namespace ZooEmulator.Repo
         public ZooRepo()
         {
             _animals = new List<Animal>();
-            AddAnimalsForDebug();
         }
 
+        // Create animals for debug 
         public void AddAnimalsForDebug()
         {
             _animals = new List<Animal>
@@ -43,6 +43,7 @@ namespace ZooEmulator.Repo
             };
         }
 
+        // Create animal with entered name and type
         public void CreateAnimal(string name, AnimalType type)
         {
             // Check if animal with this name doesn't exist
@@ -92,11 +93,13 @@ namespace ZooEmulator.Repo
             
         }
 
+        // Get the list of all animals
         public IEnumerable<Animal> GetAnimalList()
         {
             return _animals.OrderBy(i => i.Name);
         }
 
+        // Get animal by name
         public Animal GetAnimalByName(string name)
         {
              if (_animals.Count > 0)
@@ -109,6 +112,7 @@ namespace ZooEmulator.Repo
              }           
         }
 
+        // Get random animal
         public Animal GetRandomAnimal()
         {
             if (_animals.Count > 0)
@@ -119,6 +123,7 @@ namespace ZooEmulator.Repo
             return null;
         }
 
+        // Delete animal by name
         public void DeleteAnimal(string name)
         {
             try
@@ -143,34 +148,40 @@ namespace ZooEmulator.Repo
 
         // ------------------ 3rd task ---------------------
 
+        // Get list of animals grouped by type
         public IEnumerable<IGrouping<AnimalType, Animal>> GetAnimalsGroupedByType()
         {
             return _animals.GroupBy(animal => animal.Type);
         }
 
+        // Get list of animals with entered status
         public IEnumerable<Animal> GetAnimalsByStatus(AnimalStatus status)
         {
             return _animals.Where(animal => animal.Status.Equals(status));
         }
 
+        // Get list of sick tigers
         public IEnumerable<Animal> GetSickTigers()
         {
             return _animals.Where(animal => animal.Type.Equals(AnimalType.Tiger) &&
                         animal.Status.Equals(AnimalStatus.Sick));
         }
 
+        // Get elephant by name
         public Animal GetElephantByName(string name)
         {
             return _animals.First(animal => animal.Type.Equals(AnimalType.Elephant) && 
                         animal.Name.Equals(name));
         }
 
+        // Get names list of empty animals
         public IEnumerable<string> GetEmptyAnimalsNames()
         {
             return _animals.Where(animal => animal.Status.Equals(AnimalStatus.Empty))
                         .Select(animal => animal.Name);
         }
         
+        // Get list of more healthy animal of each type
         public IEnumerable<Animal> GetMoreHealthyAnimalsEachType()
         {
             return _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
@@ -178,50 +189,42 @@ namespace ZooEmulator.Repo
                             .Select(group => group.OrderBy(i => i.Health).First());
         }
 
+        // Get list of dead animals amount of each type
         public IEnumerable<KeyValuePair<AnimalType, Int32>> GetDeadAnimalsAmountEachType()
         {
             return _animals.GroupBy(animal => animal.Type)
-                            .Select(animal => new KeyValuePair<AnimalType, Int32>(
-                                animal.Key, 
-                                animal.Where(a => a.Status.Equals(AnimalStatus.Dead))
-                                    .Count()));
+                           .Select(animal => new KeyValuePair<AnimalType, Int32>
+                                (
+                                    animal.Key, 
+                                    animal.Where(a => a.Status.Equals(AnimalStatus.Dead)).Count()
+                                ));
         }
 
+        // Get list of wolfs and bears that have health greater than 3 points
         public IEnumerable<Animal> GetWolfsAndBearsHealthGt3()
         {
             return _animals.Where(animal => animal.Health > 3 &&
-                        (animal.Type.Equals(AnimalType.Wolf) ||
-                         animal.Type.Equals(AnimalType.Bear)));
+                                 (animal.Type.Equals(AnimalType.Wolf) || animal.Type.Equals(AnimalType.Bear)));
 
         }
         
+        // Get animals that have min and max health (2 entities)
         public IEnumerable<Animal> GetAnimalsMinMaxHealth()
         {
             return _animals.Select(i => new List<Animal>
                             {
                                 _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
-                                        .OrderBy(a => a.Health)
-                                        .First(),
-
+                                        .OrderBy(a => a.Health).First(),
                                 _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
-                                        .OrderByDescending(a => a.Health)
-                                        .First()
+                                        .OrderByDescending(a => a.Health).First()
                             }).First();
-
-
-            //return _animals.GroupBy(animal => animal.Health)
-            //            .Select(group => group.Max()).ToList()
-            //            .Union(_animals.GroupBy(animal => animal.Health)
-            //            .Select(group => group.Min()).ToList());
-
-
-            //return _animals.Where(a => a.Health.Equals(_animals.Max(h => h.Health)))
-            //                     .Union(_animals.Where(a => a.Health.Equals(_animals.Min(h => h.Health))));
         }
 
+        // Get avg health value of alive animals
         public double GetAnimalsAvgHealth()
         {
-            return _animals.Average(animal => animal.Health);
+            return _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
+                           .Average(animal => animal.Health);
         }
     }
 }

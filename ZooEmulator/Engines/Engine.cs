@@ -162,9 +162,6 @@ namespace ZooEmulator.Engines
 
                                 case 2:
 
-                                    //// Display menu and get user input 
-                                    //userInput = DisplayStatusMenu();
-
                                     // Print menu
                                     userInput = Renderer.DisplayMenu("Choose animal status:", new List<string>
                                                                 {
@@ -244,7 +241,7 @@ namespace ZooEmulator.Engines
 
                                 case 7:
 
-                                    Console.WriteLine($"Dead animals:");
+                                    Console.WriteLine($"Dead animals amount of each group:");
 
                                     zoo.GetDeadAnimalsAmountEachType().ToList().ForEach(i => Console.WriteLine($"{i.Key}: {i.Value}"));
 
@@ -253,7 +250,7 @@ namespace ZooEmulator.Engines
 
                                 case 8:
 
-                                    Console.WriteLine($"Wolfs and bears that have health > 3:");
+                                    Console.WriteLine($"Wolfs and bears that have health greater than 3 points:");
 
                                     zoo.GetWolfsAndBearsHealthGt3().ToList().ForEach(i => Console.WriteLine(i));
 
@@ -271,7 +268,7 @@ namespace ZooEmulator.Engines
 
                                 case 10:
 
-                                    Console.WriteLine($"Avg health in the zoo:");
+                                    Console.WriteLine($"Avg health of alive animals:");
 
                                     Console.WriteLine(zoo.GetAnimalsAvgHealth());
 

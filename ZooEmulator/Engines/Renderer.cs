@@ -8,18 +8,19 @@ namespace ZooEmulator.Engines
 {
     class Renderer
     {
-        private static readonly Renderer instance = new Renderer();
+        //private static readonly Renderer instance = new Renderer();
         private static int _top;
         private static int _left;
         private Renderer() { }
 
         public static string Message { get; set; }
 
-        public static Renderer GetInstance()
-        {
-            return instance;
-        }
+        //public static Renderer GetInstance()
+        //{
+        //    return instance;
+        //}
 
+        // Print header at the top of the screen
         public static void PrintHeader()
         {
             // Print title
@@ -36,6 +37,7 @@ namespace ZooEmulator.Engines
             PrintPrevMessage();
         }
 
+        // Print message after the header
         public static void PrintMessage(string message)
         {
             // Remember message
@@ -57,11 +59,13 @@ namespace ZooEmulator.Engines
             Console.SetCursorPosition(_left, _top);
         }
 
+        // Print message again if screen was cleared
         public static void PrintPrevMessage()
         {
             PrintMessage(Message);
         }
 
+        // Display menu and return selected command
         public static int DisplayMenu(string name, IEnumerable<string> items)
         {
             // Print menu

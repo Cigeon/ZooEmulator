@@ -20,7 +20,7 @@ namespace ZooEmulator
             var zoo = new ZooRepo();
             zoo.AddAnimalsForDebug();
 
-            // Create God of death
+            // Create God of death :)
             var Anubis = new GodOfDeath();
             Anubis.SetWatchPeriod(5000);
             Anubis.WatchFor(zoo);
