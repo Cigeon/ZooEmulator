@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooEmulator.Engines;
 
 namespace ZooEmulator.Animals
 {
@@ -17,6 +18,9 @@ namespace ZooEmulator.Animals
         {
             _name = name;
             _status = AnimalStatus.Full;
+
+            // Print message 
+            Renderer.PrintMessage($"{Type} {Name} was created");
         }
 
         public string Name { get { return _name; } }
@@ -31,20 +35,25 @@ namespace ZooEmulator.Animals
             if (_status > AnimalStatus.Sick)
             {
                 _status--;
-                Console.WriteLine($"{Type} {Name} status decreased to {Status}");
+
+                // Print message 
+                Renderer.PrintMessage($"{Type} {Name} status is decreased to {Status}");
             }
             else
             {
                 if (_health > 0)
                 {
                     _health--;
-                    Console.WriteLine($"{Type} {Name} health decreased to {Health}");
+
+                    // Print message
+                    Renderer.PrintMessage($"{Type} {Name} health is decreased to {Health}");
+
                     if (_health == 0)
                     {
                         _status = AnimalStatus.Dead;
 
-                        Console.WriteLine();
-                        Console.WriteLine($"{Type} {Name} dead!!!");
+                        // Print message
+                        Renderer.PrintMessage($"{Type} {Name} dead!!!");
                     }
                 }
 
@@ -57,13 +66,17 @@ namespace ZooEmulator.Animals
             if (Status != AnimalStatus.Dead)
             {
                 _status = AnimalStatus.Full;
-                Message.GetInstance().Body = $"{Type} {Name} has been feed, his status: {Status}";
+
+                // Print message
+                Renderer.PrintMessage($"{Type} {Name} is feeded, his status: {Status}");
             }
             else
             {
-                Message.GetInstance().Body = $"{Type} {Name} dead you can't feed it";
+                // Print message
+                Renderer.PrintMessage($"{Type} {Name} dead, you can't feed it");
+
             }
-            
+
         }
 
         // Cure the animal
@@ -74,12 +87,22 @@ namespace ZooEmulator.Animals
                 if (_health < MaxHealth)
                 {
                     _health++;
-                    Message.GetInstance().Body = $"{Type} {Name} has been cured, his health: {Health}";
+
+                    // Print message
+                    Renderer.PrintMessage($"{Type} {Name} is cured, his health: {Health}");
+
+                }
+                else
+                {
+                    // Print message
+                    Renderer.PrintMessage($"You can't cure {Type} {Name} he has max health!!!");
                 }
             }
             else
             {
-                Message.GetInstance().Body = $"{Type} {Name} dead you can't cure it";
+                // Print message
+                Renderer.PrintMessage($"{Type} {Name} dead you can't cure it");
+
             }
 
         }
