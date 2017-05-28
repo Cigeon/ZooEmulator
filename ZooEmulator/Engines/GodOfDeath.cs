@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using ZooEmulator.Repo;
 
-namespace ZooEmulator.Menues
+namespace ZooEmulator.Engines
 {
     class GodOfDeath
     {

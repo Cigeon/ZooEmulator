@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ZooEmulator.Animals;
 using ZooEmulator.Factories;
 using System.Timers;
+using ZooEmulator.Engines;
 
 namespace ZooEmulator.Repo
 {
@@ -48,7 +49,7 @@ namespace ZooEmulator.Repo
             var exist = _animals.Where(i => i.Name == name).ToArray().Length;
             if (exist > 0)
             {
-                Message.GetInstance().Body = "Animal with this name already exitst!";
+                Renderer.PrintMessage("Animal with this name already exitst!");
                 return;
             }
 
@@ -74,7 +75,7 @@ namespace ZooEmulator.Repo
                     _factory = new FoxFactory();
                     break;
                 default:
-                    Console.WriteLine("Couldn't create animal");
+                    Renderer.PrintMessage("Couldn't create animal");
                     break;
             }
 
@@ -86,7 +87,7 @@ namespace ZooEmulator.Repo
             }
             catch(ArgumentNullException ex)
             {
-                Console.WriteLine($"Couldn't create animal {ex.Message}");
+                Renderer.PrintMessage($"Couldn't create animal {ex.Message}");
             }
             
         }
@@ -126,7 +127,7 @@ namespace ZooEmulator.Repo
                 {
                     var delAnimal = _animals.First(i => i.Name == name);
                     if (delAnimal.Status == AnimalStatus.Dead) _animals.Remove(delAnimal);
-                    Message.GetInstance().Body = $"Animal {name} deleted";
+                    Renderer.PrintMessage($"Animal {name} deleted");
                 }
                 else
                 {
@@ -135,7 +136,7 @@ namespace ZooEmulator.Repo
             }
             catch (InvalidOperationException)
             {
-                Message.GetInstance().Body = $"Animal {name} doesn't exist";
+                Renderer.PrintMessage($"Animal {name} doesn't exist");
             }
             
         }

@@ -54,8 +54,9 @@
     <Compile Include="Animals\Wolf.cs" />
     <Compile Include="Factories\Factory.cs" />
     <Compile Include="Factories\IFactory.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="Menues\GodOfDeath.cs" />
+    <Compile Include="Engines\GodOfDeath.cs" />
+    <Compile Include="Engines\Engine.cs" />
+    <Compile Include="Engines\Renderer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\IZoo.cs" />
