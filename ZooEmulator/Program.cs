@@ -125,7 +125,7 @@ namespace ZooEmulator
                                 case 1:
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"Animals grouped by type:");
                                     zoo.GetAnimalsGroupedByType().ToList()
                                         .ForEach(g => 
                                         {
@@ -164,7 +164,7 @@ namespace ZooEmulator
 
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"Animals that have specified status:");
                                     zoo.GetAnimalsByStatus(status).ToList()
                                         .ForEach(i => Console.WriteLine(i));
 
@@ -173,7 +173,7 @@ namespace ZooEmulator
                                 case 3:
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"Sick tigers:");
                                     zoo.GetSickTigers().ToList().ForEach(i => Console.WriteLine(i));
 
                                     Console.ReadKey();
@@ -181,7 +181,7 @@ namespace ZooEmulator
                                 case 4:
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"Show elephant by name:");
                                     Console.WriteLine(zoo.GetElephantByName(Console.ReadLine()));
 
                                     Console.ReadKey();
@@ -189,7 +189,7 @@ namespace ZooEmulator
                                 case 5:
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"List of empty animals names:");
                                     zoo.GetEmptyAnimalsNames().ToList().ForEach(i => Console.WriteLine(i));
 
                                     Console.ReadKey();
@@ -213,7 +213,7 @@ namespace ZooEmulator
                                 case 8:
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"Wolfs and bears that have health > 3:");
                                     zoo.GetWolfsAndBearsHealthGt3().ToList().ForEach(i => Console.WriteLine(i));
 
                                     Console.ReadKey();
@@ -221,7 +221,7 @@ namespace ZooEmulator
                                 case 9:
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"Animals that have min and max health:");
                                     zoo.GetAnimalsMinMaxHealth().ToList().ForEach(i => Console.WriteLine(i));
 
                                     Console.ReadKey();
@@ -229,7 +229,7 @@ namespace ZooEmulator
                                 case 10:
                                     // Clear scene and print title
                                     PrintTitle();
-
+                                    Console.WriteLine($"Avg health in the zoo:");
                                     Console.WriteLine(zoo.GetAnimalsAvgHealth());
 
                                     Console.ReadKey();

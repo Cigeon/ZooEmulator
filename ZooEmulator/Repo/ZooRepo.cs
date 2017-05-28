@@ -40,7 +40,6 @@ namespace ZooEmulator.Repo
                 new Fox("Jecky"),
                 new Fox("Ronny")
             };
-
         }
 
         public void CreateAnimal(string name, AnimalType type)
@@ -197,16 +196,26 @@ namespace ZooEmulator.Repo
         // ???
         public IEnumerable<Animal> GetAnimalsMinMaxHealth()
         {
+            return _animals.Select(i => new List<Animal>
+                            {
+                                _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
+                                        .OrderBy(a => a.Health)
+                                        .First(),
+
+                                _animals.Except(_animals.Where(animal => animal.Status.Equals(AnimalStatus.Dead)))
+                                        .OrderByDescending(a => a.Health)
+                                        .First()
+                            }).First();
+
+
             //return _animals.GroupBy(animal => animal.Health)
             //            .Select(group => group.Max()).ToList()
             //            .Union(_animals.GroupBy(animal => animal.Health)
             //            .Select(group => group.Min()).ToList());
 
-            //return _animals.OrderBy(a => a.Health).Where(a => a.First())
-            //                     .Union(_animals.Where(a => a.Health.Equals(_animals.Min(h => h.Health))));
 
-            return _animals.Where(a => a.Health.Equals(_animals.Max(h => h.Health)))
-                                 .Union(_animals.Where(a => a.Health.Equals(_animals.Min(h => h.Health))));
+            //return _animals.Where(a => a.Health.Equals(_animals.Max(h => h.Health)))
+            //                     .Union(_animals.Where(a => a.Health.Equals(_animals.Min(h => h.Health))));
         }
 
         public double GetAnimalsAvgHealth()
