@@ -45,7 +45,7 @@ namespace ZooEmulator.Engines
                                                             "2. Feed animal",
                                                             "3. Cure animal",
                                                             "4. Delete animal",
-                                                            "5. Show animals",
+                                                            "5. Show animals    <--- 3rd task",
                                                             "6. Exit"
                                                         });
 
@@ -136,9 +136,9 @@ namespace ZooEmulator.Engines
                                                                 "5. Names of empty animals",
                                                                 "6. More healthy animals of the each type",
                                                                 "7. Dead animals amount of the each type",
-                                                                "8. Wolfs and bears health that have health > 3",
+                                                                "8. Wolfs and bears that have health > 3",
                                                                 "9. Animals that have min and max health",
-                                                                "10. Average health of all animal",
+                                                                "10. Average health of alive animals",
                                                                 "Press any key back to prev menu"
                                                             });
 
